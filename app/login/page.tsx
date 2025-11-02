@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 
@@ -42,6 +43,8 @@ export default function Login(){
               Logging in...</button>
             )}
           </form>
+          <label className="mt-4">Forgot your password? <Link href="/" className="text-blue-500">Reset Password.</Link></label>
+          <label className="mt-2">Do not have an account? <Link href="/register" className="text-blue-500">Sign Up.</Link></label>
         </div>
         {/* Info about tracker Container */}
         <div className="flex flex-col justify-center bg-gray-800 text-white rounded-xl shadow-lg p-8">

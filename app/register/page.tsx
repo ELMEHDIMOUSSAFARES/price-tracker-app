@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 
@@ -104,6 +105,7 @@ export default function Register(){
             Creating account...</button>
             )}
         </form>
+        <label className="mt-4">Already have an account? <Link href="/login" className="text-blue-500">Log in.</Link></label>
       </div>
     </div>
   );

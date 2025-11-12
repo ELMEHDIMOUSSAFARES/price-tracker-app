@@ -30,7 +30,7 @@ const Footer = () =>{
                 </a>
                 <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                   {footerLinks.map(link=>(
-                    <li><Link href={link.link} className={link.style}>{link.title}</Link></li>
+                    <li key={link.title}><Link href={link.link} className={link.style}>{link.title}</Link></li>
                   ))}  
                 </ul>
             </div>

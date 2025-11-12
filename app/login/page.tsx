@@ -1,21 +1,43 @@
 "use client";
+import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 
-
 export default function Login(){
- 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+  const router = useRouter();
 
-  const onSubmitHandler = (e: FormElem) =>{
+
+  const onSubmitHandler = async (e: FormElem) =>{
     e.preventDefault();
     setIsDataSubmitted(true);
+    await signIn.email(
+      {
+        email,
+        password,
+      },
+      {
+        onRequest: () => {},
+        onResponse: () => {},
+        onError: (ctx) => {
+          alert(ctx.error.message)
+          setIsDataSubmitted(false)
+        },
+        onSuccess: () => {
+          router.refresh()
+          router.push("/dashboard")
+        },
+      }
+    )
   }
+
+
 
   return(
     <div className="flex justify-center items-center min-h-screen bg-gray-100 mt-15">

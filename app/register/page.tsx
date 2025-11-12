@@ -1,5 +1,7 @@
 "use client";
+import { signUp } from "@/lib/auth-client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 
@@ -16,7 +18,7 @@ export default function Register(){
   const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
-  const onSubmitHandler = (e: FormElem) =>{
+  const onSubmitHandler = async (e: FormElem) =>{
     e.preventDefault();
 
     if (confirmPassword !== password){
@@ -28,8 +30,23 @@ export default function Register(){
       alert("Please accept the privacy policy before registering!");
       return;
     }
-
     setIsDataSubmitted(true);
+
+    await signUp.email(
+      {
+        name: fullName,
+        email,
+        password,
+        desiredUse: desiredUse,
+      },
+      {
+        onRequest: () => {},
+        onResponse: () => {},
+        onError: (ctx) => {alert("Error: "+ ctx.error.message)},
+        onSuccess: ()=> {redirect("/dashboard")},
+      },
+    )
+
   }
 
   return(
@@ -95,7 +112,7 @@ export default function Register(){
             </label>
           </div>
           {!isDataSubmitted ? (
-            <button onClick={()=>setIsDataSubmitted(true)} type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 transition focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-3 cursor-pointer"
+            <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 transition focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-3 cursor-pointer"
             >Sign Up</button>
           ):(
             <button disabled

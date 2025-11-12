@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "Find the best deals for any product you desire.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
